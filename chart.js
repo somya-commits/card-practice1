@@ -581,3 +581,20 @@ class EnergyCharts {
 
 // Export for use in main.js
 window.EnergyCharts = EnergyCharts;
+// Handle Connect to Meter
+document.getElementById("connectMeterForm").addEventListener("submit", function (e) {
+  e.preventDefault();
+
+  const meterId = document.getElementById("meterId").value;
+  const apiKey = document.getElementById("apiKey").value;
+  const statusDiv = document.getElementById("meterStatus");
+
+  // Simulate API call (replace with real API later)
+  if (meterId.trim() !== "") {
+    statusDiv.innerHTML = `<p><i class="fas fa-check-circle"></i> Connected to meter <b>${meterId}</b> successfully!</p>`;
+    statusDiv.className = "meter-status success";
+  } else {
+    statusDiv.innerHTML = `<p><i class="fas fa-times-circle"></i> Please enter a valid Meter ID.</p>`;
+    statusDiv.className = "meter-status error";
+  }
+});
