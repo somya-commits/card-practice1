@@ -1,4 +1,4 @@
-/* CSS Reset and Base Styles */
+/* CSS Reset and Base Styles *//* CSS Reset and Base Styles */
 * {
     margin: 0;
     padding: 0;
@@ -72,7 +72,7 @@ body {
 
 /* Navigation */
 .navbar {
-    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+    background: black;
     color: white;
     padding: var(--space-4) 0;
     box-shadow: var(--shadow-lg);
@@ -106,6 +106,7 @@ body {
 .nav-menu {
     display: flex;
     gap: var(--space-6);
+    
 }
 
 .nav-link {
@@ -127,9 +128,43 @@ body {
 }
 
 .nav-link.active {
-    background-color: rgba(255, 255, 255, 0.2);
-    color: white;
+    background-color: white;
+    color: black;
 }
+.connect-meter-section {
+  margin-top: 30px;
+  padding: 20px;
+  background: black;
+  border-radius: 10px;
+  border: 2px solid #00ffcc;
+}
+
+.connect-meter-section h2 {
+  color: #00ffcc;
+  margin-bottom: 10px;
+}
+
+.connect-meter-section p {
+  margin-bottom: 20px;
+  color: #ccc;
+}
+
+.meter-status {
+  margin-top: 15px;
+  padding: 10px;
+  border-radius: 6px;
+  background: black;
+  color: #fff;
+}
+.meter-status.success {
+  background: #0f5132;
+  color: #d1e7dd;
+}
+.meter-status.error {
+  background: #842029;
+  color: #f8d7da;
+}
+
 
 /* Main Content */
 .main-content {
@@ -186,7 +221,7 @@ body {
 }
 
 .stat-card {
-    background: white;
+    background: black;
     padding: var(--space-6);
     border-radius: var(--radius-xl);
     box-shadow: var(--shadow-md);
@@ -231,13 +266,13 @@ body {
 .stat-content h3 {
     font-size: var(--font-size-2xl);
     font-weight: 700;
-    color: var(--gray-900);
+    color: white;
     margin-bottom: var(--space-1);
 }
 
 .stat-content p {
     font-size: var(--font-size-sm);
-    color: var(--gray-600);
+    color: rgb(68, 64, 64);
     margin-bottom: var(--space-1);
 }
 
@@ -277,6 +312,13 @@ body {
     box-shadow: var(--shadow-md);
 }
 
+.chart-containers {
+    background: black;
+    padding: var(--space-6);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-md);
+}
+
 .chart-header {
     display: flex;
     justify-content: space-between;
@@ -290,6 +332,12 @@ body {
     font-size: var(--font-size-xl);
     font-weight: 600;
     color: var(--gray-900);
+}
+
+.chart-header h3 {
+    font-size: var(--font-size-xl);
+    font-weight: 600;
+    color: white;
 }
 
 .chart-controls {
@@ -404,7 +452,7 @@ body {
 }
 
 .performer-card {
-    background: white;
+    background: black;
     padding: var(--space-4);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-md);
@@ -985,3 +1033,207 @@ tr:hover {
         border: 1px solid var(--gray-300);
     }
 }
+/* ---------------- General ---------------- */
+body {
+  font-family: "Segoe UI", sans-serif;
+  background: #f9fafb;
+  margin: 0;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+h1 {
+  color: #111827;
+  margin-bottom: 20px;
+}
+
+/* ---------------- Input Section ---------------- */
+.notif-input {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.notif-input input {
+  padding: 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 14px;
+  width: 220px;
+}
+
+.notif-input button {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  color: #fff;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.notif-input button:hover {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  transform: translateY(-2px);
+}
+
+/* ---------------- Notification Log ---------------- */
+.notif-log {
+  margin-top: 16px;
+  background: #fff;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+  width: 400px;
+}
+
+.notif-log h3 {
+  margin: 0 0 12px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #1f2937;
+  border-bottom: 2px solid #e5e7eb;
+  padding-bottom: 6px;
+}
+
+.notif-log ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+.notif-log li {
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin-bottom: 8px;
+  font-size: 14px;
+  color: #374151;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.notif-log li span {
+  font-size: 12px;
+  color: #6b7280;
+}
+/* General Page */
+body {
+  font-family: "Segoe UI", sans-serif;
+  background: #f9fafb;
+  margin: 0;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+h1 {
+  color: #111827;
+  margin-bottom: 20px;
+}
+
+/* Tracker Card */
+.tracker {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  width: 380px;
+  margin-bottom: 25px;
+}
+
+.tracker h2 {
+  margin-top: 0;
+  color: #1f2937;
+}
+
+.tracker input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+}
+
+.tracker button {
+  margin-top: 10px;
+  width: 100%;
+  padding: 10px;
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.tracker button:hover {
+  background: linear-gradient(135deg, #059669, #047857);
+  transform: scale(1.02);
+}
+
+/* Output Table */
+.output {
+  margin-top: 15px;
+}
+
+.output table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.output th, .output td {
+  border: 1px solid #e5e7eb;
+  padding: 8px;
+  text-align: left;
+}
+
+.output th {
+  background: #10b981;
+  color: white;
+}
+
+.output tr:nth-child(even) {
+  background: #f3f4f6;
+}
+
+/* Progress Bar */
+.progress-container {
+  margin-top: 15px;
+}
+
+.progress-bar {
+  width: 100%;
+  background: #e5e7eb;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-top: 10px;
+}
+
+.progress-fill {
+  height: 20px;
+  width: 0%;
+  background: #10b981;
+  color: white;
+  text-align: center;
+  font-size: 12px;
+  line-height: 20px;
+  border-radius: 10px;
+  transition: width 0.5s ease;
+}
+
