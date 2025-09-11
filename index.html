@@ -1,7 +1,12 @@
+
+       
+                    
+                <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Neighborhood Energy Tracker - EcoVillage</title>
     
     <!-- Fonts -->
@@ -15,7 +20,6 @@
     
     <!-- Custom CSS -->
     <link rel="stylesheet" href="style.css">
-      
 </head>
 <body>
     <!-- Navigation -->
@@ -23,7 +27,7 @@
         <div class="nav-container">
             <div class="nav-brand">
                 <i class="fas fa-leaf"></i>
-                <span>EcoVillage Energy Tracker</span>
+                <span>neighbourhood Energy Tracker-WattsUp!!</span>
             </div>
             <div class="nav-menu">
                 <a href="#dashboard" class="nav-link active" data-tab="dashboard">
@@ -33,14 +37,45 @@
                     <i class="fas fa-trophy"></i> Leaderboard
                 </a>
                 <a href="#household" class="nav-link" data-tab="household">
-                    <i class="fas fa-home"></i> My Home
+                    <i class="fas fa-home"></i>  Home
                 </a>
                 <a href="#community" class="nav-link" data-tab="community">
                     <i class="fas fa-users"></i> Community
                 </a>
+                 <a href="#resources" class="nav-link" data-tab="resources">
+                    <i class="fa-solid fa-book-bookmark"></i> resources
+                </a>
             </div>
         </div>
     </nav>
+    <!-- Connect to Meter Section -->
+<div class="connect-meter-section">
+  <h2>Connect to Your Smart Meter</h2>
+  <p>Link your home’s energy meter to track real-time electricity usage.</p>
+
+  <form id="connectMeterForm" class="form-grid">
+    <div class="form-group">
+      <label for="meterId">Meter ID</label>
+      <input type="text" id="meterId" class="form-input" placeholder="Enter your Meter ID" required>
+    </div>
+
+    <div class="form-group">
+      <label for="apiKey">API Key (if provided)</label>
+      <input type="text" id="apiKey" class="form-input" placeholder="Enter API Key">
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+      <i class="fas fa-plug"></i> Connect Meter
+    </button>
+  </form>
+
+  <!-- Status -->
+  <div id="meterStatus" class="meter-status">
+    <p><i class="fas fa-info-circle"></i> Not connected yet</p>
+  </div>
+</div>
+
+
 
     <!-- Main Content -->
     <main class="main-content">
@@ -118,9 +153,9 @@
                         </div>
                     </div>
 
-                    <div class="chart-container">
+                    <div class="chart-containers">
                         <div class="chart-header">
-                            <h2>Energy Distribution</h2>
+                            <h3>Energy Distribution</h3>
                         </div>
                         <div class="chart-wrapper" style="height: 300px;">
                             <canvas id="energyDistributionChart"></canvas>
@@ -249,6 +284,20 @@
                         <option value="">Choose your house...</option>
                     </select>
                 </div>
+                <h1>🚗 Car Route Notifications</h1>
+
+  <!-- Input Section -->
+  <div class="notif-input">
+    <label for="destination">Enter Destination:</label>
+    <input type="text" id="destination" placeholder="e.g. Airport, Mall, Office">
+    <button onclick="sendCarNotification()">Send Notification</button>
+  </div>
+
+  <!-- Notification Log -->
+  <div class="notif-log">
+    <h3>Notification Log</h3>
+    <ul id="notifList"></ul>
+  </div>
 
                 <!-- Personal Stats -->
                 <div class="personal-stats" id="personalStats" style="display: none;">
@@ -379,10 +428,64 @@
         </div>
         <p>Loading energy data...</p>
     </div>
+    
+
+  <h1>🌱 Resource Tracker</h1>
+
+  <!-- Biogas Tracker -->
+  <div class="tracker">
+    <h2>Biogas Tracker</h2>
+
+    <label for="biogasInput">Add Biogas Produced (m³):</label>
+    <input type="number" id="biogasInput" placeholder="Enter amount">
+    <button onclick="updateBiogas()">Update Biogas</button>
+
+    <!-- Output Table -->
+    <div class="output">
+      <table id="biogasTable">
+        <tr><th>Metric</th><th>Value</th></tr>
+        <tr><td>Total Biogas</td><td>0 m³</td></tr>
+        <tr><td>Equivalent Energy</td><td>0 kWh</td></tr>
+        <tr><td>Cooking Hours Saved</td><td>0 hrs</td></tr>
+        <tr><td>CO₂ Reduced</td><td>0 kg</td></tr>
+        <tr><td>LPG Cylinders Saved</td><td>0</td></tr>
+        <tr><td>Money Saved</td><td>₹0</td></tr>
+        <tr><td>Streetlight Hours Powered</td><td>0 hrs</td></tr>
+        <tr><td>Streetlights (10 hrs each)</td><td>0</td></tr>
+        <tr><td>Nights for 10 Lamps</td><td>0</td></tr>
+      </table>
+    </div>
+
+    <!-- Progress Bar -->
+    <div class="progress-container">
+      <label for="targetInput">Set Monthly Target (m³):</label>
+      <input type="number" id="targetInput" placeholder="e.g., 50">
+      <button onclick="setTarget()">Set Target</button>
+
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill">0%</div>
+      </div>
+    </div>
+
+    <!-- Chart -->
+    <canvas id="biogasChart"></canvas>
+  </div>
+
+  <!-- Greywater Tracker -->
+  <div class="tracker">
+    <h2>Greywater Tracker</h2>
+    <label for="greywaterInput">Add Greywater Collected (Liters):</label>
+    <input type="number" id="greywaterInput" placeholder="Enter amount">
+    <button onclick="updateGreywater()">Update Greywater</button>
+    <div class="output" id="greywaterOutput">Total Greywater: 0 L</div>
+  </div>
+
+ 
 
     <!-- Scripts -->
     <script src="js/main.js"></script>
-    <script src="js/charts.js"></script>
+    <script src="js/chart.js"></script>
     <script src="js/leaderboard.js"></script>
+    <script src="js/resource.js"></script>
 </body>
 </html>
