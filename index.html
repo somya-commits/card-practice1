@@ -1,23 +1,388 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neighborhood Energy Tracker - EcoVillage</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    
+    <!-- Chart.js for data visualization -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="style.css">
-    <title>Card</title>
+      
 </head>
 <body>
-    <div class="navbar">
-        <div class="outer_box">
-            <div class="inner_box"></div><br>
-            <button class="na1">Nature</button>
-            <button class="na1">Lake</button> 
-            <br>
-           <br> <h2>Lago Di Braies</h2><br><br>        
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ut possimus enim tenetur voluptas, quos a facilis rerum esse accusamus sint atque pariatur dicta debitis tempore veniam quo fugiat, maiores deleniti?</p>   
-        <br><div class="button">Read More</div>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <i class="fas fa-leaf"></i>
+                <span>EcoVillage Energy Tracker</span>
+            </div>
+            <div class="nav-menu">
+                <a href="#dashboard" class="nav-link active" data-tab="dashboard">
+                    <i class="fas fa-chart-line"></i> Dashboard
+                </a>
+                <a href="#leaderboard" class="nav-link" data-tab="leaderboard">
+                    <i class="fas fa-trophy"></i> Leaderboard
+                </a>
+                <a href="#household" class="nav-link" data-tab="household">
+                    <i class="fas fa-home"></i> My Home
+                </a>
+                <a href="#community" class="nav-link" data-tab="community">
+                    <i class="fas fa-users"></i> Community
+                </a>
+            </div>
         </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Dashboard Tab -->
+        <div id="dashboard" class="tab-content active">
+            <div class="container">
+                <div class="page-header">
+                    <h1>Energy Dashboard</h1>
+                    <p>Monitor neighborhood energy consumption and conservation efforts</p>
+                </div>
+
+                <!-- Stats Cards -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon energy">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="totalConsumption">0 kWh</h3>
+                            <p>Total Consumption</p>
+                            <span class="stat-change negative">+2.5% from last month</span>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon savings">
+                            <i class="fas fa-piggy-bank"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="totalSavings">$0</h3>
+                            <p>Community Savings</p>
+                            <span class="stat-change positive">+12% from last month</span>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon co2">
+                            <i class="fas fa-leaf"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="co2Reduced">0 kg</h3>
+                            <p>CO₂ Reduced</p>
+                            <span class="stat-change positive">+18% from last month</span>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon households">
+                            <i class="fas fa-home"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="activeHouseholds">0</h3>
+                            <p>Active Households</p>
+                            <span class="stat-change neutral">Same as last month</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts Section -->
+                <div class="charts-section">
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <h2>Energy Usage Trends</h2>
+                            <div class="chart-controls">
+                                <select id="timeRange" class="form-select">
+                                    <option value="7">Last 7 Days</option>
+                                    <option value="30">Last 30 Days</option>
+                                    <option value="90" selected>Last 3 Months</option>
+                                    <option value="365">Last Year</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="chart-wrapper" style="height: 400px;">
+                            <canvas id="energyTrendChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <h2>Energy Distribution</h2>
+                        </div>
+                        <div class="chart-wrapper" style="height: 300px;">
+                            <canvas id="energyDistributionChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Top Performers -->
+                <div class="top-performers">
+                    <h2>Top Energy Savers This Month</h2>
+                    <div class="performers-grid" id="topPerformers">
+                        <!-- Populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Leaderboard Tab -->
+        <div id="leaderboard" class="tab-content">
+            <div class="container">
+                <div class="page-header">
+                    <h1>Community Leaderboard</h1>
+                    <p>Compete with neighbors and earn eco-badges for energy conservation</p>
+                </div>
+
+                <!-- Leaderboard Filters -->
+                <div class="leaderboard-controls">
+                    <div class="filter-group">
+                        <label for="leaderboardPeriod">Time Period:</label>
+                        <select id="leaderboardPeriod" class="form-select">
+                            <option value="weekly">This Week</option>
+                            <option value="monthly" selected>This Month</option>
+                            <option value="yearly">This Year</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="leaderboardMetric">Metric:</label>
+                        <select id="leaderboardMetric" class="form-select">
+                            <option value="savings">Energy Savings</option>
+                            <option value="efficiency">Energy Efficiency</option>
+                            <option value="consistency">Consistency Score</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Podium -->
+                <div class="podium-section">
+                    <div class="podium">
+                        <div class="podium-place second">
+                            <div class="podium-avatar">
+                                <i class="fas fa-home"></i>
+                            </div>
+                            <div class="podium-info">
+                                <h3 id="second-place-name">House #2</h3>
+                                <p id="second-place-score">0 kWh saved</p>
+                            </div>
+                            <div class="podium-rank">2</div>
+                        </div>
+                        <div class="podium-place first">
+                            <div class="podium-crown">👑</div>
+                            <div class="podium-avatar">
+                                <i class="fas fa-home"></i>
+                            </div>
+                            <div class="podium-info">
+                                <h3 id="first-place-name">House #1</h3>
+                                <p id="first-place-score">0 kWh saved</p>
+                            </div>
+                            <div class="podium-rank">1</div>
+                        </div>
+                        <div class="podium-place third">
+                            <div class="podium-avatar">
+                                <i class="fas fa-home"></i>
+                            </div>
+                            <div class="podium-info">
+                                <h3 id="third-place-name">House #3</h3>
+                                <p id="third-place-score">0 kWh saved</p>
+                            </div>
+                            <div class="podium-rank">3</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Full Leaderboard -->
+                <div class="leaderboard-table">
+                    <h2>Full Rankings</h2>
+                    <div class="table-container">
+                        <table id="leaderboardTable">
+                            <thead>
+                                <tr>
+                                    <th>Rank</th>
+                                    <th>Household</th>
+                                    <th>Score</th>
+                                    <th>Badges</th>
+                                    <th>Streak</th>
+                                </tr>
+                            </thead>
+                            <tbody id="leaderboardBody">
+                                <!-- Populated by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Achievement System -->
+                <div class="achievements-section">
+                    <h2>Community Achievements</h2>
+                    <div class="achievements-grid" id="achievementsGrid">
+                        <!-- Populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- My Home Tab -->
+        <div id="household" class="tab-content">
+            <div class="container">
+                <div class="page-header">
+                    <h1>My Home Energy Profile</h1>
+                    <p>Track your personal energy usage and set conservation goals</p>
+                </div>
+
+                <!-- Household Selection -->
+                <div class="household-selector">
+                    <label for="householdSelect">Select Your Household:</label>
+                    <select id="householdSelect" class="form-select">
+                        <option value="">Choose your house...</option>
+                    </select>
+                </div>
+
+                <!-- Personal Stats -->
+                <div class="personal-stats" id="personalStats" style="display: none;">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-tachometer-alt"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 id="personalUsage">0 kWh</h3>
+                                <p>This Month's Usage</p>
+                                <span class="stat-change" id="personalUsageChange">0% vs last month</span>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-medal"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 id="personalRank">#0</h3>
+                                <p>Community Rank</p>
+                                <span class="stat-change" id="personalRankChange">No change</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Personal Chart -->
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <h2>Your Energy Usage History</h2>
+                        </div>
+                        <div class="chart-wrapper" style="height: 300px;">
+                            <canvas id="personalChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Goals Section -->
+                    <div class="goals-section">
+                        <h2>Energy Goals</h2>
+                        <div class="goal-card">
+                            <div class="goal-header">
+                                <h3>Monthly Reduction Target</h3>
+                                <span class="goal-progress" id="goalProgress">0%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="goalProgressBar" style="width: 0%"></div>
+                            </div>
+                            <p class="goal-description">Reduce energy usage by 15% compared to last year</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Community Tab -->
+        <div id="community" class="tab-content">
+            <div class="container">
+                <div class="page-header">
+                    <h1>Community Insights</h1>
+                    <p>Explore neighborhood-wide energy patterns and initiatives</p>
+                </div>
+
+                <!-- Community Overview -->
+                <div class="community-overview">
+                    <div class="overview-card">
+                        <h2>Neighborhood Impact</h2>
+                        <div class="impact-stats">
+                            <div class="impact-item">
+                                <i class="fas fa-tree"></i>
+                                <span class="impact-number" id="treesEquivalent">0</span>
+                                <span class="impact-label">Trees Planted Equivalent</span>
+                            </div>
+                            <div class="impact-item">
+                                <i class="fas fa-car"></i>
+                                <span class="impact-number" id="carsOffRoad">0</span>
+                                <span class="impact-label">Cars Off Road Equivalent</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Community Chart -->
+                <div class="chart-container">
+                    <div class="chart-header">
+                        <h2>Neighborhood Comparison</h2>
+                    </div>
+                    <div class="chart-wrapper" style="height: 400px;">
+                        <canvas id="communityChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Add New Household -->
+                <div class="add-household-section">
+                    <h2>Join the Community</h2>
+                    <form id="addHouseholdForm" class="form-grid">
+                        <div class="form-group">
+                            <label for="householdName">Household Name</label>
+                            <input type="text" id="householdName" class="form-input" placeholder="e.g., The Johnson Family" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="householdAddress">Address</label>
+                            <input type="text" id="householdAddress" class="form-input" placeholder="e.g., 123 Oak Street" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="householdSize">Household Size</label>
+                            <select id="householdSize" class="form-select" required>
+                                <option value="">Select size...</option>
+                                <option value="1">1 person</option>
+                                <option value="2">2 people</option>
+                                <option value="3">3 people</option>
+                                <option value="4">4 people</option>
+                                <option value="5">5+ people</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-plus"></i> Add Household
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay">
+        <div class="spinner">
+            <i class="fas fa-spinner fa-spin"></i>
+        </div>
+        <p>Loading energy data...</p>
     </div>
-    
+
+    <!-- Scripts -->
+    <script src="js/main.js"></script>
+    <script src="js/charts.js"></script>
+    <script src="js/leaderboard.js"></script>
 </body>
 </html>
