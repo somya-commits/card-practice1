@@ -722,3 +722,24 @@ document.head.appendChild(notificationStyleSheet);
 
 // Initialize the application
 window.energyTracker = new EnergyTracker();
+
+function sendCarNotification() {
+  const destinationInput = document.getElementById("destination");
+  const destination = destinationInput.value.trim();
+
+  if (destination === "") {
+    alert("Please enter a destination!");
+    return;
+  }
+
+  const notifList = document.getElementById("notifList");
+  const li = document.createElement("li");
+
+  const message = `🚗 Car is heading towards: ${destination}`;
+  const time = new Date().toLocaleTimeString();
+
+  li.innerHTML = `${message} <span>${time}</span>`;
+  notifList.prepend(li);
+
+  destinationInput.value = ""; // clear input
+}
